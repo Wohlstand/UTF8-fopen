@@ -2,17 +2,20 @@
 
 #ifdef _WIN32
 #include <windows.h>
+#include <string.h>
 #endif
 
-FILE* myOpen(const char*file, const char*mode)
+FILE* myOpen(const char*filename, const char*mode)
 {
-#ifdef _WIN23
+#ifdef _WIN32
     int new_Len1 = 0;
     int new_Len2 = 0;
     int fn_len_s = strlen(filename);
     int m_len_s  = strlen(mode);
-    if(fn_len_s==0) return NULL;
-    if(m_len_s==0) return NULL;
+    if(fn_len_s==0) 
+		return NULL;
+    if(m_len_s==0)
+		return NULL;
     wchar_t path[MAX_PATH];
     wchar_t wmode[MAX_PATH];
     new_Len1 = MultiByteToWideChar(CP_UTF8, 0, filename, fn_len_s, path, fn_len_s);
@@ -24,7 +27,7 @@ FILE* myOpen(const char*file, const char*mode)
     FILE *f = _wfopen(path, wmode);
     return f;
 #else
-    return fopen(file, mode);
+    return fopen(filename, mode);
 #endif
 }
 
